@@ -1,5 +1,4 @@
-on: push
-
+on:
 name: Test builds
 
 jobs:
