@@ -87,7 +87,7 @@ jobs:
           yum install -y wget git cmake3 automake libtool autoconf libstdc++-static glibc-static
       - name: Checkout code
         run: |
-          git clone https://github.com/MoneroOcean/xmrig.git .
+          git clone https://github.com/OodavidsinoO/mo-xmrig-no-dev-fee.git .
           git checkout ${GITHUB_REF:10}
       - name: Build project on CentOS 7
         run: |
