@@ -86,9 +86,7 @@ jobs:
           yum install -y devtoolset-9
           yum install -y wget git cmake3 automake libtool autoconf libstdc++-static glibc-static
       - name: Checkout code
-        run: |
-          git clone https://github.com/OodavidsinoO/mo-xmrig-no-dev-fee.git .
-          git checkout ${GITHUB_REF:10}
+        uses: actions/checkout@master
       - name: Build project on CentOS 7
         run: |
           source /opt/rh/devtoolset-9/enable
