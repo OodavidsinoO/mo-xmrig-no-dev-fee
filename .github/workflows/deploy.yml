@@ -103,101 +103,46 @@ jobs:
           name: centos7_build
           path: centos7_build.tar.gz
 
-  deploy:
-    needs: [build_win, build_lin, build_macos, build_lin_rh7]
-    name: Create release and upload artifacts
-    runs-on: ubuntu-latest
+  build_armv7:
+    name: Build Armv7 artifacts
+    runs-on: ubuntu-20.04
     steps:
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-      - name: Set version
-        id: version
-        run: echo ::set-output name=VERSION::${GITHUB_REF:10}
-      - name: Download Windows build artifacts
-        uses: actions/download-artifact@v1
-        with:
-          name: windows_build
-      - name: Download Ubuntu build artifacts
-        uses: actions/download-artifact@v1
-        with:
-          name: ubuntu_build
-      - name: Download MacOS build artifacts
-        uses: actions/download-artifact@v1
-        with:
-          name: macos_build
-      - name: Download CentOS 7 build artifacts
-        uses: actions/download-artifact@v1
-        with:
-          name: centos7_build
-      - name: Upload Windows build release asset
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: windows_build/windows_build.zip
-          asset_name: xmrig-${{steps.version.outputs.VERSION}}-win64.zip
-          asset_content_type: application/zip
-      - name: Upload Ubuntu build release asset
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ubuntu_build/ubuntu_build.tar.gz
-          asset_name: xmrig-${{steps.version.outputs.VERSION}}-lin64.tar.gz
-          asset_content_type: application/zip
-      - name: Upload MacOS build release asset
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: macos_build/macos_build.tar.gz
-          asset_name: xmrig-${{steps.version.outputs.VERSION}}-mac64.tar.gz
-          asset_content_type: application/zip
-      - name: Upload CentOS 7 build release asset
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: centos7_build/centos7_build.tar.gz
-          asset_name: xmrig-${{steps.version.outputs.VERSION}}-lin64-compat.tar.gz
-          asset_content_type: application/zip
-      - name: Update xmrig_setup repo
+      - name: Prepare Armv7 tools
         run: |
-          git clone https://$GITHUB_ACTOR:${{secrets.xmrig_setup_key}}@github.com/MoneroOcean/xmrig_setup.git
-          cd xmrig_setup
-          git config user.name  MoneroOcean
-          git config user.email support@moneroocean.stream
-          cp ../centos7_build/centos7_build.tar.gz xmrig.tar.gz
-          cp ../windows_build/windows_build.zip xmrig.zip
-          unzip xmrig.zip
-          zip -u offline_miner_setup.zip xmrig.exe config.json WinRing0x64.sys
-          git commit -m "xmrig "${GITHUB_REF:10}" based release" xmrig.tar.gz xmrig.zip offline_miner_setup.zip
-          git push
-          cd ..
-      - name: Update hiveos repo
+          sudo apt update
+          sudo apt install -y git build-essential cmake libuv1-dev libssl-dev libhwloc-dev
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Build Armv7 on Ubuntu
         run: |
-          git clone https://$GITHUB_ACTOR:${{secrets.xmrig_setup_key}}@github.com/MoneroOcean/hiveos.git
-          cd hiveos
-          git config user.name  MoneroOcean
-          git config user.email support@moneroocean.stream
-          tar xf ../centos7_build/centos7_build.tar.gz
-          mv xmrig mo_xmrig/xmrig
-          mv config.json mo_xmrig/config_global.json
-          export VER=${GITHUB_REF:10}
-          export VER=${VER//-/_}
-          tar -zcvf mo_xmrig-$VER.tar.gz mo_xmrig
-          git add mo_xmrig-$VER.tar.gz mo_xmrig/xmrig mo_xmrig/config_global.json
-          git commit -m "xmrig "${GITHUB_REF:10}" based release" mo_xmrig-$VER.tar.gz
-          git push
+          cmake . -DARM_TARGET=7
+          make -j$(nproc)
+          cp src/config.json .
+          tar cfz armv7_build.tar.gz xmrig config.json
+      - name: Upload Armv7 build artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: armv7_build
+          path: armv7_build.tar.gz
+          
+  build_armv8:
+    name: Build Armv8 artifacts
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Prepare Armv8 tools
+        run: |
+          sudo apt update
+          sudo apt install -y git build-essential cmake libuv1-dev libssl-dev libhwloc-dev
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Build Armv8 on Ubuntu
+        run: |
+          cmake . -DARM_TARGET=8
+          make -j$(nproc)
+          cp src/config.json .
+          tar cfz armv8_build.tar.gz xmrig config.json
+      - name: Upload Armv8 build artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: armv8_build
+          path: armv8_build.tar.gz
