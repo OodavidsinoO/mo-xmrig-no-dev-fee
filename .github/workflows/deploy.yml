@@ -10,7 +10,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
       - name: Checkout deps
-        run:  git clone https://github.com/xmrig/xmrig-deps.git
+        run: |
+              git config http.postBuffer 524288000
+              git clone https://github.com/xmrig/xmrig-deps.git
       - name: Build project on Windows
         run: |
           cmake . -G "MinGW Makefiles" -DXMRIG_DEPS=xmrig-deps\gcc\x64
