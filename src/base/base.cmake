@@ -132,6 +132,7 @@ set(SOURCES_BASE
     src/base/net/tools/LineReader.cpp
     src/base/net/tools/NetBuffer.cpp
     src/base/tools/Arguments.cpp
+    src/base/tools/Chrono.cpp
     src/base/tools/cryptonote/BlockTemplate.cpp
     src/base/tools/cryptonote/crypto-ops-data.c
     src/base/tools/cryptonote/crypto-ops.c
@@ -244,7 +245,7 @@ else()
 endif()
 
 
-if (WITH_KAWPOW)
+if (WITH_KAWPOW OR WITH_GHOSTRIDER)
     list(APPEND HEADERS_BASE
         src/base/net/stratum/AutoClient.h
         src/base/net/stratum/EthStratumClient.h
