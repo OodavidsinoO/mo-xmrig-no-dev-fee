@@ -161,14 +161,6 @@ size_t inline generate<Algorithm::ARGON2>(Threads<CpuThreads> &threads, uint32_t
 #endif
 
 
-#ifdef XMRIG_ALGO_ASTROBWT
-template<>
-size_t inline generate<Algorithm::ASTROBWT>(Threads<CpuThreads>& threads, uint32_t limit)
-{
-    return generate(Algorithm::kASTROBWT, threads, Algorithm::ASTROBWT_DERO, limit);
-}
-#endif
-
 #ifdef XMRIG_ALGO_GHOSTRIDER
 template<>
 size_t inline generate<Algorithm::GHOSTRIDER>(Threads<CpuThreads>& threads, uint32_t limit)

@@ -110,31 +110,6 @@ if (WITH_OPENCL)
              )
     endif()
 
-    if (WITH_ASTROBWT)
-        list(APPEND HEADERS_BACKEND_OPENCL
-             src/backend/opencl/kernels/astrobwt/AstroBWT_FilterKernel.h
-             src/backend/opencl/kernels/astrobwt/AstroBWT_FindSharesKernel.h
-             src/backend/opencl/kernels/astrobwt/AstroBWT_MainKernel.h
-             src/backend/opencl/kernels/astrobwt/AstroBWT_PrepareBatch2Kernel.h
-             src/backend/opencl/kernels/astrobwt/AstroBWT_Salsa20Kernel.h
-             src/backend/opencl/kernels/astrobwt/AstroBWT_SHA3InitialKernel.h
-             src/backend/opencl/kernels/astrobwt/AstroBWT_SHA3Kernel.h
-             src/backend/opencl/runners/OclAstroBWTRunner.h
-             )
-
-        list(APPEND SOURCES_BACKEND_OPENCL
-             src/backend/opencl/generators/ocl_generic_astrobwt_generator.cpp
-             src/backend/opencl/kernels/astrobwt/AstroBWT_FilterKernel.cpp
-             src/backend/opencl/kernels/astrobwt/AstroBWT_FindSharesKernel.cpp
-             src/backend/opencl/kernels/astrobwt/AstroBWT_MainKernel.cpp
-             src/backend/opencl/kernels/astrobwt/AstroBWT_PrepareBatch2Kernel.cpp
-             src/backend/opencl/kernels/astrobwt/AstroBWT_Salsa20Kernel.cpp
-             src/backend/opencl/kernels/astrobwt/AstroBWT_SHA3InitialKernel.cpp
-             src/backend/opencl/kernels/astrobwt/AstroBWT_SHA3Kernel.cpp
-             src/backend/opencl/runners/OclAstroBWTRunner.cpp
-             )
-    endif()
-
     if (WITH_KAWPOW)
         list(APPEND HEADERS_BACKEND_OPENCL
              src/backend/opencl/kernels/kawpow/KawPow_CalculateDAGKernel.h
