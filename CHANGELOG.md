@@ -1,3 +1,34 @@
+# v6.19.3
+- [#3245](https://github.com/xmrig/xmrig/issues/3245) Improved algorithm negotiation for donation rounds by sending extra information about current mining job.
+- [#3254](https://github.com/xmrig/xmrig/pull/3254) Tweaked auto-tuning for Intel CPUs.
+- [#3271](https://github.com/xmrig/xmrig/pull/3271) RandomX: optimized program generation.
+- [#3273](https://github.com/xmrig/xmrig/pull/3273) RandomX: fixed undefined behavior.
+- [#3275](https://github.com/xmrig/xmrig/pull/3275) RandomX: fixed `jccErratum` list.
+- [#3280](https://github.com/xmrig/xmrig/pull/3280) Updated example scripts.
+
+# v6.19.2
+- [#3230](https://github.com/xmrig/xmrig/pull/3230) Fixed parsing of `TX_EXTRA_MERGE_MINING_TAG`.
+- [#3232](https://github.com/xmrig/xmrig/pull/3232) Added new `X-Hash-Difficulty` HTTP header.
+- [#3240](https://github.com/xmrig/xmrig/pull/3240) Improved .cmd files when run by shortcuts on another drive.
+- [#3241](https://github.com/xmrig/xmrig/pull/3241) Added view tag calculation (fixes Wownero solo mining issue).
+
+# v6.19.1
+- Resolved deprecated methods warnings with OpenSSL 3.0.
+- [#3213](https://github.com/xmrig/xmrig/pull/3213) Fixed build with 32-bit clang 15.
+- [#3218](https://github.com/xmrig/xmrig/pull/3218) Fixed: `--randomx-wrmsr=-1` worked only on Intel.
+- [#3228](https://github.com/xmrig/xmrig/pull/3228) Fixed build with gcc 13.
+
+# v6.19.0
+- [#3144](https://github.com/xmrig/xmrig/pull/3144) Update to latest `sse2neon.h`.
+- [#3161](https://github.com/xmrig/xmrig/pull/3161) MSVC build: enabled parallel compilation.
+- [#3163](https://github.com/xmrig/xmrig/pull/3163) Improved Zen 3 MSR mod.
+- [#3176](https://github.com/xmrig/xmrig/pull/3176) Update cmake required version to 3.1.
+- [#3182](https://github.com/xmrig/xmrig/pull/3182) DragonflyBSD compilation fixes.
+- [#3196](https://github.com/xmrig/xmrig/pull/3196) Show IP address for failed connections.
+- [#3185](https://github.com/xmrig/xmrig/issues/3185) Fixed macOS DMI reader.
+- [#3198](https://github.com/xmrig/xmrig/pull/3198) Fixed broken RandomX light mode mining.
+- [#3202](https://github.com/xmrig/xmrig/pull/3202) Solo mining: added job timeout (default is 15 seconds).
+
 # v6.18.1
 - [#3129](https://github.com/xmrig/xmrig/pull/3129) Fix: protectRX flushed CPU cache only on MacOS/iOS.
 - [#3126](https://github.com/xmrig/xmrig/pull/3126) Don't reset when pool sends the same job blob.
